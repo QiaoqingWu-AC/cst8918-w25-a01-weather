@@ -32,7 +32,7 @@ export async function loader() {
     lon: location.lon,
     units: units
   })
-  return json({currentConditions: data.current})
+  return json({currentConditions: data})
 }
 
 export default function CurrentConditions() {
@@ -65,7 +65,7 @@ export default function CurrentConditions() {
         >
           <img src={getWeatherIconUrl(weather.icon)} alt="" />
           <div style={{fontSize: '2rem'}}>
-            {currentConditions.temp.toFixed(1)}°C
+            {currentConditions.main.temp.toFixed(1)}°C
           </div>
         </div>
         <p
@@ -75,7 +75,7 @@ export default function CurrentConditions() {
           }}
         >
           {capitalizeFirstLetter(weather.description)}. Feels like{' '}
-          {currentConditions['feels_like'].toFixed(1)}°C.
+          {currentConditions['main']['feels_like'].toFixed(1)}°C.
           <br />
           <span style={{color: 'hsl(220, 23%, 60%)', fontSize: '0.85rem'}}>
             updated at{' '}
