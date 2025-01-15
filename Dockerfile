@@ -4,16 +4,15 @@ FROM node:lts-alpine as base
 # set for base and all layer that inherit from it
 ENV NODE_ENV production
 
-# Install openssl for Prisma
-# RUN apk -U add --update-cache openssl sqlite
+# Install necessary packages
+RUN apk --no-cache add openssl sqlite
 
 # Create user and set ownership and permissions as required
-RUN <<EOT 
-addgroup student && 
-adduser -D -H -g "student" -G student student && 
-mkdir /cst8918-a01 && 
-chown -R student:student /cst8918-a01
-EOT
+RUN addgroup student && \
+    adduser -D -H -g "student" -G student student && \
+    mkdir /cst8918-a01 && \
+    chown -R student:student /cst8918-a01
+
 
 # Install all node_modules, including dev dependencies
 FROM base as deps
@@ -47,9 +46,6 @@ FROM base
 
 ENV PORT="8080"
 ENV NODE_ENV="production"
-# BONUS: This should be injected at runtime from a secrets manager
-# We will review the solution next class
-# ENV WEATHER_API_KEY="bc2682b67f497cf9a1f5bfbdde7a4ea1"
 
 WORKDIR /cst8918-a01
 

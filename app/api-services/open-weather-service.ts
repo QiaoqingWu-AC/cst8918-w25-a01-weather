@@ -22,6 +22,8 @@ export async function fetchWeatherData({
   lon,
   units
 }: FetchWeatherDataParams) {
+  console.log("API_KEY: ", API_KEY);
+  
   const baseURL = 'https://api.openweathermap.org/data/3.0/onecall'
   const queryString = `lat=${lat}&lon=${lon}&units=${units}&appid=${API_KEY}`
 
@@ -31,6 +33,7 @@ export async function fetchWeatherData({
   }
   const response = await fetch(`${baseURL}?${queryString}`)
   const data = await response.json()
+  console.log("data: ", data);
   setCacheEntry(queryString, data)
   return data
 }
